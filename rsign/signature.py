@@ -70,7 +70,7 @@ class HMACSignature(Signature):
     def sign_string(self, key, text):
         """ Return the signing method's digest """
         key, text = _clean(key), _clean(text)
-        return hmac.new(key, text, self.hash_fn).digest()
+        return hmac.new(key.encode(), text.encode('utf-8'), self.hash_fn).digest()
 
 
 class Base64Mixin(Signature):
@@ -86,7 +86,7 @@ class Base64Mixin(Signature):
     def sign_string(self, key, text):
         """ Return the signing method's digest """
         binary = super(Base64Mixin, self).sign_string(key, text)
-        return binascii.b2a_base64(binary).replace('\n', '')
+        return str(binascii.b2a_base64(binary)).replace('\n', '')
 
 
 class HMACBase64Signature(Base64Mixin, HMACSignature):
