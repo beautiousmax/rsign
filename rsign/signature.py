@@ -86,7 +86,7 @@ class Base64Mixin(Signature):
     def sign_string(self, key, text):
         """ Return the signing method's digest """
         binary = super(Base64Mixin, self).sign_string(key, text)
-        return str(binascii.b2a_base64(binary)).replace('\n', '')
+        return binascii.b2a_base64(binary).decode('utf-8').replace('\n', '')
 
 
 class HMACBase64Signature(Base64Mixin, HMACSignature):

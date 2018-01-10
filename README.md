@@ -50,7 +50,7 @@ sr = SignedRequest('GET', 'www.example.com', '/a/b/c?d=1&e=2&f=3', '443')
 user = User.objects.get(id=1)
 key_id = user.key_id
 key = user.key
-nonce = str(binascii.b2a_base64(os.urandom(32))).replace('\n', '')
+nonce = binascii.b2a_base64(os.urandom(32)).decode('utf-8').replace('\n', '')
 timestamp = str(int(time.time()))
 header, value = sr.get_signed_header(nonce, timestamp, key_id, key)
 assert(sr.verify_signed_header(value, key))
@@ -101,7 +101,7 @@ mac = "oYhbGKDhOZZ9ReHQyZS0jMLwOSQDGplmWbtY3d+dORM="
 
 >>> timestamp = str(int(time.time()))
 
->>> nonce = str(binascii.b2a_base64(os.urandom(32))).replace('\n', '')
+>>> nonce = binascii.b2a_base64(os.urandom(32)).decode('utf-8').replace('\n', '')
 
 >>> header = sr.get_signed_header(nonce, timestamp, api_key_id, api_key)
 
@@ -127,7 +127,7 @@ mac = "oYhbGKDhOZZ9ReHQyZS0jMLwOSQDGplmWbtY3d+dORM="
 
 >>> port = '443'
 
->>> nonce = str(binascii.b2a_base64(os.urandom(32))).replace('\n', '')
+>>> nonce = binascii.b2a_base64(os.urandom(32)).decode('utf-8').replace('\n', '')
 
 >>> timestamp = str(int(time.time()))
 
